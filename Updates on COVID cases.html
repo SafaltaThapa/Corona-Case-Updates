@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates on coronavirus cases</title>
+    <style>
+        body{
+            padding-top: 70px;
+            text-align:center;
+            background-image: url("https://i.pinimg.com/originals/3f/0a/7d/3f0a7d813b7e1402f9c66cab2f82dd38.gif");
+            
+        }
+    </style>
+</head>
+
+<body>
+    <h1><Font color="lightblue">Covid-19 cases in Nepal</Font></h1>
+    <b>
+    <div class="totalcases">
+       <h2>Total cases: <span class="case"> </span></h2>
+    </div>
+
+    <div class="deaths">
+        <h2>Total deaths: <span class="death"></span></h2>
+    </div>
+
+    <div class="recovered">
+        <h2>Total recovered: <span class="recover"></span></h2>
+   
+    </div>
+    </b>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        totalcases = document.querySelector(".totalcases");
+        totaldeath = document.querySelector(".totaldeath");
+        totalrecovered = document.querySelector(".totalrecovered");
+
+        const settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country.php?country=Nepal",
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "coronavirus-monitor.p.rapidapi.com",
+                "x-rapidapi-key": "7ab5bc98e5msh2a02aa319f5d355p1f98bdjsn76fd281af303"
+            }
+        };
+
+        $.ajax(settings).done(function(response) {
+            const parsedData = JSON.parse(response);
+            console.log(parsedData);
+
+            var total_cases = (parsedData['latest_stat_by_country'][0]['total_cases'])
+
+            var deaths = (parsedData['latest_stat_by_country'][0]['total_deaths'])
+
+            var recovered = (parsedData['latest_stat_by_country'][0]['total_recovered'])
+
+            console.log(total_cases);
+            document.querySelector(".case").innerHTML = total_cases;
+
+            document.querySelector(".death").innerHTML = deaths;
+
+            document.querySelector(".recover").innerHTML = recovered;
+        });
+    </script>
+</body>
+</html>
